@@ -44,6 +44,8 @@ Usage
 
 To use the script manually, run `docker-gc`.
 
+The script can also be run in "reporting" mode, where it simply outputs a list of containers that would have been reaped. To invoke this mode, run `docker-gc -r`.
+
 
 Excluding Images From Garbage Collection
 ----------------------------------------

@@ -136,9 +136,21 @@ sort | uniq > images.used
 $DOCKER images -q --no-trunc | sort | uniq > images.all
 comm -23 images.all images.used | grep -v -f $EXCLUDE_IDS_FILE > images.reap || true
 
+while getopts ":r" opt; do
+    case $opt in 
+        r)
+            echo "Images to reap:"
+            cat images.reap
+            echo ""
+            echo "Containers to reap:"
+            cat containers.reap
+            exit
+            ;;
+    esac
+done
+
 # Reap containers.
 xargs -n 1 $DOCKER rm --volumes=true < containers.reap &>/dev/null || true
 
 # Reap images.
 xargs -n 1 $DOCKER rmi < images.reap &>/dev/null || true
-
